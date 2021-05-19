@@ -8,7 +8,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--ToDoEy-->
+        <!--ToDoList-->
         <scene sceneID="Pc4-2H-PVX">
             <objects>
                 <tableViewController id="OMJ-bC-xBb" customClass="ToDoListViewController" customModule="Todoey" customModuleProvider="target" sceneMemberID="viewController">
@@ -31,7 +31,7 @@
                             <outlet property="delegate" destination="OMJ-bC-xBb" id="0aS-6Z-F6p"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="ToDoEy" id="6j8-WC-7ge"/>
+                    <navigationItem key="navigationItem" title="ToDoList" id="6j8-WC-7ge"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="U1d-vq-iAc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
