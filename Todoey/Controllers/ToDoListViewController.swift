@@ -12,10 +12,13 @@ class ToDoListViewController: UITableViewController {
     
     
     var itemArray = [Item]()
-    let defaults = UserDefaults.standard  //storage local
+  //  let defaults = UserDefaults.standard  //storage local singelton
+    let dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("Items.plist")
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        print(dataFilePath!)
         
         let newItem = Item()
         newItem.title = "Find mike"
@@ -27,13 +30,13 @@ class ToDoListViewController: UITableViewController {
         
         let newItem2 = Item()
         newItem2.title = "Find paul"
-        itemArray.append(newItem2)
+        self.itemArray.append(newItem2)
         
         
         //load saved array data
-        if let items = defaults.array(forKey: "TodoListArray") as? [Item] {
-            itemArray = items
-        }
+  //      if let items = defaults.array(forKey: "TodoListArray") as? [Item] {
+  //          itemArray = items
+  //      }
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -66,8 +69,10 @@ class ToDoListViewController: UITableViewController {
         
         itemArray[indexPath.row].done = !itemArray[indexPath.row].done  /// oposite !!!
 
+        saveItems()
         
-        tableView.reloadData()
+        
+  //      tableView.reloadData()
         tableView.deselectRow(at: indexPath, animated: true)
     }
     //MARK: - Add new Item Button
@@ -84,9 +89,9 @@ class ToDoListViewController: UITableViewController {
             newItem.title = textField.text!
             
             self.itemArray.append(newItem)
-            self.defaults.set(self.itemArray, forKey: "TodoListArray")   //local storage   singelton
-            self.tableView.reloadData()
-            print(textField.text!)
+            
+         //   self.defaults.set(self.itemArray, forKey: "TodoListArray")   //local storage   singelton
+            self.saveItems()
         }
         
         alert.addTextField { (alertTextField) in
@@ -99,7 +104,19 @@ class ToDoListViewController: UITableViewController {
             present(alert, animated: true, completion: nil)
     }
 
+//MARK: - Model Manipulation Methods
     
+func saveItems(){
+    let encoder = PropertyListEncoder()
+    
+    do {
+        let data = try encoder.encode(itemArray)
+        try data.write(to: dataFilePath!)
+    } catch {
+        print("Error ecoding item array, \(error)")
+    }
+    
+    tableView.reloadData()
+    }
 }
-
 
