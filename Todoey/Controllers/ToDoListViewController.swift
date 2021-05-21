@@ -20,19 +20,19 @@ class ToDoListViewController: UITableViewController {
         
         print(dataFilePath!)
         
-        let newItem = Item()
-        newItem.title = "Find mike"
-        itemArray.append(newItem)
+//        let newItem = Item()
+//        newItem.title = "Find mike"
+//        itemArray.append(newItem)
+//
+//        let newItem1 = Item()
+//        newItem1.title = "Find john"
+//        itemArray.append(newItem1)
+//
+//        let newItem2 = Item()
+//        newItem2.title = "Find paul"
+//        self.itemArray.append(newItem2)
         
-        let newItem1 = Item()
-        newItem1.title = "Find john"
-        itemArray.append(newItem1)
-        
-        let newItem2 = Item()
-        newItem2.title = "Find paul"
-        self.itemArray.append(newItem2)
-        
-        
+        loadItems()
         //load saved array data
   //      if let items = defaults.array(forKey: "TodoListArray") as? [Item] {
   //          itemArray = items
@@ -106,17 +106,29 @@ class ToDoListViewController: UITableViewController {
 
 //MARK: - Model Manipulation Methods
     
-func saveItems(){
-    let encoder = PropertyListEncoder()
+    func saveItems(){
+        let encoder = PropertyListEncoder()
     
-    do {
-        let data = try encoder.encode(itemArray)
-        try data.write(to: dataFilePath!)
-    } catch {
-        print("Error ecoding item array, \(error)")
-    }
-    
+        do {
+            let data = try encoder.encode(itemArray)                     /// encodable
+            try data.write(to: dataFilePath!)
+        } catch {
+            print("Error ecoding item array, \(error)")
+        }
     tableView.reloadData()
     }
+    
+    func loadItems(){
+        if let data = try? Data(contentsOf: dataFilePath!) {
+            let decoder = PropertyListDecoder()
+            
+            do {
+                itemArray = try decoder.decode([Item].self, from: data)     ///decodable
+            } catch {
+                print("Error decoding item array, \(error)")
+            }
+        }
+    }
+    
 }
 
