@@ -33,6 +33,7 @@ class ToDoListViewController: UITableViewController {
   //          itemArray = items
   //      }
     }
+   //MARK: - TableView Datasource Methods
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return itemArray.count
@@ -56,7 +57,7 @@ class ToDoListViewController: UITableViewController {
         return cell
     }
     
-    //MARK: - Table View Delegate Mathod
+    //MARK: - Table View Delegate Mathods
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
        // print(itemArray[indexPath.row])
@@ -72,7 +73,7 @@ class ToDoListViewController: UITableViewController {
   //      tableView.reloadData()
         tableView.deselectRow(at: indexPath, animated: true)
     }
-    //MARK: - Add new Item Button
+    //MARK: - Add New Items
     
     @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
         
