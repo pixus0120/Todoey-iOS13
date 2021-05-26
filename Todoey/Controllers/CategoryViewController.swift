@@ -11,73 +11,82 @@ import CoreData
 
 class CategoryViewController: UITableViewController {
 
-    var itemArray = [Item]()
-    
+    var categoryArray = [Category]()
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        loadCategory()
     }
     
     //MARK: - TableView Datasource Methods  1.
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return itemArray.count
-    }
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        let cell = tableView.dequeueReusableCell(withIdentifier: "ToDoItemCell", for: indexPath)
-        let item = itemArray[indexPath.row]
-        
-        cell.textLabel?.text = item.title
-
-        cell.accessoryType = item.done ? .checkmark : .none    ////
-        
-        return cell
+        return categoryArray.count
     }
     
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "CategoryCell", for: indexPath)
+        let category = categoryArray[indexPath.row]
+        cell.textLabel?.text = category.name
+        return cell
+    }
+    //MARK: - TableView Delegate Metods 4.
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        performSegue(withIdentifier: "goToItems", sender: self)
+    }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let destinationVC = segue.destination as! ToDoListViewController
+        if let indexPath = tableView.indexPathForSelectedRow {
+            
+            destinationVC.selectedCathegory = categoryArray[indexPath.row]
+        }
+    }
 
     //MARK: - Data Manipulation Methods  2.
         
-    func saveItems(){       //save data to DB
-        
+    func saveCategory(){       //save data to DB
             do {
                 try context.save()
             } catch {
-                print("Error saving content, \(error)")
+                print("Error saving category, \(error)")
             }
             self.tableView.reloadData()
         }
     
-    func loadItems(with request: NSFetchRequest<Item> = Item.fetchRequest()){     // load, read data from DB
+    func loadCategory() {
+                let request: NSFetchRequest<Category> = Category.fetchRequest()
                 do {
-                    itemArray = try context.fetch(request)
+                    categoryArray = try context.fetch(request)
                 } catch {
-                    print("Erorr ferching context data: \(error)")
+                    print("Error loading categories: \(error)")
                 }
+            tableView.reloadData()
             }
     
-    //MARK: - Add New Categories
+    //MARK: - Add New Categories 3.
     
-@IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
-    
+    @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
+
     var textField = UITextField()
-    
-    let alert = UIAlertController(title: "Add New ToDoList Item", message: "", preferredStyle: .alert)
-    let action = UIAlertAction(title: "Add Item", style: .default) { (action) in
         
-        let newItem = Item(context: self.context)
-        newItem.title = textField.text!
-        newItem.done = false
-        self.itemArray.append(newItem)
+    let alert = UIAlertController (title: "Add New Category", message: "", preferredStyle: .alert)
+    let action = UIAlertAction (title: "Add", style: .default) { (action) in
         
-     //   self.defaults.set(self.itemArray, forKey: "TodoListArray")   //local storage   singelton
-        self.saveItems()
+        let newCategory = Category(context: self.context)
+        newCategory.name = textField.text!
+        self.categoryArray.append(newCategory)
+        self.saveCategory()
+        self.tableView.reloadData()
     }
     
-    alert.addTextField { (alertTextField) in
-        alertTextField.placeholder = "Create new item"
+        alert.addTextField { (alertTextField) in
+        alertTextField.placeholder = "Create new Category"
         textField = alertTextField
     }
-}
+        alert.addAction(action)
+        present(alert, animated: true, completion: nil)
+    }
 }

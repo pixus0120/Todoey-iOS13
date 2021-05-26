@@ -8,10 +8,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--ToDoList-->
+        <!--Category-->
         <scene sceneID="Suc-f5-TfV">
             <objects>
-                <tableViewController id="kIO-vT-btA" customClass="CategoryViewController" customModule="Todoey" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="kIO-vT-btA" customClass="CategoryViewController" customModule="Todoey" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="REq-si-WoT">
                         <rect key="frame" x="0.0" y="0.0" width="428" height="926"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -31,11 +31,11 @@
                             <outlet property="delegate" destination="kIO-vT-btA" id="tLv-9L-B0l"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="ToDoList" id="V6c-ZZ-ltU">
+                    <navigationItem key="navigationItem" title="Category" id="V6c-ZZ-ltU">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="A5g-sy-2T5">
                             <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <connections>
-                                <action selector="addButtonPressed:" destination="kIO-vT-btA" id="j6H-F4-MgH"/>
+                                <action selector="addButtonPressed:" destination="kIO-vT-btA" id="Bej-Vr-z7f"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -50,7 +50,7 @@
         <!--Items-->
         <scene sceneID="Pc4-2H-PVX">
             <objects>
-                <tableViewController id="OMJ-bC-xBb" customClass="ToDoListViewController" customModule="Todoey" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="OMJ-bC-xBb" customClass="ToDoListViewController" customModule="Todoey" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="C6v-Xr-Ywx">
                         <rect key="frame" x="0.0" y="0.0" width="428" height="926"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
