@@ -13,34 +13,32 @@ import RealmSwift
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
+    
     var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
         print(Realm.Configuration.defaultConfiguration.fileURL)
 
-        let data = Data()
-        data.name = "Angela"
-        data.age = 12
+//        let data = Data()
+//        data.name = "Angela"
+//        data.age = 12
 
         do{
             let realm = try Realm()
-            try realm.write {
-                realm.add(data)
-            }
+//            try realm.write {
+//                realm.add(data)
+//            }
         } catch {
             print("error initializing new realm application, \(error)")
         }
 
-        
         return true
     }
-
     
     func applicationWillTerminate(_ application: UIApplication) {
         self.saveContext()
     }
-
 
     // MARK: - Core Data stack
 
@@ -69,6 +67,5 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
     }
-
 }
 
